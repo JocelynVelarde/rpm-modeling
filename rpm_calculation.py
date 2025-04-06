@@ -31,9 +31,19 @@ def visualize_data(data):
     st.write("### Datos Generados:")
     st.dataframe(df)
 
-    st.write("### Gráfica de RPM vs Velocidad Angular:")
+    # Gráfica 1: Velocidad Angular vs RPM
+    st.write("### Gráfica 1: Velocidad Angular vs RPM")
     st.line_chart(df[["Velocidad Angular (rad/s)", "RPM"]])
 
+    # Gráfica 2: Radio de la Rueda vs RPM
+    st.write("### Gráfica 2: Radio de la Rueda vs RPM")
+    st.line_chart(df[["Radio de la Rueda (m)", "RPM"]])
+
+    # Gráfica 3: Velocidad Angular y Radio de la Rueda
+    st.write("### Gráfica 3: Velocidad Angular y Radio de la Rueda")
+    st.line_chart(df[["Velocidad Angular (rad/s)", "Radio de la Rueda (m)"]])
+
+# Main
 if __name__ == "__main__":
     # Configuración de la página
     st.set_page_config(page_title="Visualización de RPM del Tractor")
