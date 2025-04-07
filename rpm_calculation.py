@@ -25,23 +25,33 @@ def save_to_csv(data, filename):
         writer.writerow(["Velocidad Angular (rad/s)", "Radio de la Rueda (m)", "Relación de Transmisión", "RPM"])
         writer.writerows(data)
 
-# Visualización con Streamlit
+import altair as alt
+
+# Visualización con Altair
 def visualize_data(data):
     df = pd.DataFrame(data, columns=["Velocidad Angular (rad/s)", "Radio de la Rueda (m)", "Relación de Transmisión", "RPM"])
     st.write("### Datos Generados:")
     st.dataframe(df)
 
-    # Gráfica 1: Velocidad Angular vs RPM
-    st.write("### Gráfica 1: Velocidad Angular vs RPM")
-    st.line_chart(df[["Velocidad Angular (rad/s)", "RPM"]])
+    # Gráfica 1: Relación Directamente Proporcional (Velocidad Angular vs RPM)
+    st.write("### Gráfica 1: Relación Directamente Proporcional (Velocidad Angular vs RPM)")
+    chart1 = alt.Chart(df).mark_line().encode(
+        x=alt.X("Velocidad Angular (rad/s)", title="Velocidad Angular (rad/s)"),
+        y=alt.Y("RPM", title="Revoluciones por Minuto (RPM)")
+    ).properties(
+        title="Velocidad Angular vs RPM (Relación Directamente Proporcional)"
+    )
+    st.altair_chart(chart1, use_container_width=True)
 
-    # Gráfica 2: Radio de la Rueda vs RPM
-    st.write("### Gráfica 2: Radio de la Rueda vs RPM")
-    st.line_chart(df[["Radio de la Rueda (m)", "RPM"]])
-
-    # Gráfica 3: Velocidad Angular y Radio de la Rueda
-    st.write("### Gráfica 3: Velocidad Angular y Radio de la Rueda")
-    st.line_chart(df[["Velocidad Angular (rad/s)", "Radio de la Rueda (m)"]])
+    # Gráfica 2: Relación Inversamente Proporcional (Radio de la Rueda vs RPM)
+    st.write("### Gráfica 2: Relación Inversamente Proporcional (Radio de la Rueda vs RPM)")
+    chart2 = alt.Chart(df).mark_line().encode(
+        x=alt.X("Radio de la Rueda (m)", title="Radio de la Rueda (m)"),
+        y=alt.Y("RPM", title="Revoluciones por Minuto (RPM)")
+    ).properties(
+        title="Radio de la Rueda vs RPM (Relación Inversamente Proporcional)"
+    )
+    st.altair_chart(chart2, use_container_width=True)
 
 # Main
 if __name__ == "__main__":
